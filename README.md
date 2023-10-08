@@ -37,7 +37,7 @@ Check Deployments, Pods and Services:
 
     kubectl get deploy
     kubectl get pods
-    kubectl get svc
+    kubectl get svc - check the service
     
 Now Goto Loadbalancer and check whether service comes Inservice or not, If it comes Inservice copy DNS Name of Loadbalancer and Give in WebUI
 
