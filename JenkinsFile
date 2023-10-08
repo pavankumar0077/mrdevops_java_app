@@ -22,15 +22,6 @@ pipeline{
             }
         }
 
-        // stage('Git Checkout'){
-        //     steps{
-        //         script{
-        //             gitCheckout
-        //                 branch: "main"
-        //                 url: "https://github.com/pavankumar0077/mrdevops_java_app.git"
-        //         }
-        //     }
-        // }
-
+        }
     }
 }
