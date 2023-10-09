@@ -75,6 +75,9 @@ pipeline{
 
         stage('Docker Image Build'){
         when{expression {params.action == 'create'}}
+            environment {
+            DOCKER_IMAGE = "${DockerRepo}/${ImageName}:${BUILD_NUMBER}"
+        }
             steps{
                 script{
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
