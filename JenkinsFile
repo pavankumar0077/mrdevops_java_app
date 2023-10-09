@@ -87,5 +87,20 @@ pipeline{
             }
 
         }
+
+        stage('Docker Image Push'){
+        when{expression {params.action == 'create'}}
+            environment {
+            DOCKER_IMAGE = "${DockerRepo}/${ImageName}:${BUILD_NUMBER}"
+        }
+            steps{
+                script{
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        sh "docker push ${DockerRepo}/${ImageName}:${ImageTag}"
+                    }
+                }
+            }
+
+        }
     }
 }
