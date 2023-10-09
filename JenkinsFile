@@ -134,6 +134,8 @@ pipeline{
                     // Set the Kubernetes cluster context
                     sh "kubectl config use-context minikube"
 
+                    sh "pwd"
+
                     // Apply the deployment YAML
                     sh "kubectl apply -f deployment.yaml"
 
