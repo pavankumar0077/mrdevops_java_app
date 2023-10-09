@@ -111,5 +111,20 @@ pipeline{
             }
 
         }    
+
+        stage('Docker Image CleanUp'){
+        when{expression {params.action == 'create'}}
+            environment {
+            DOCKER_IMAGE = "${DockerRepo}/${ImageName}:${BUILD_NUMBER}"
+        }
+            steps{
+                script{
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        sh "docker rmi ${DockerRepo}/${ImageName}:${ImageTag}"
+                    }
+                }
+            }
+
+        }  
     }
 }
