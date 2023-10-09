@@ -128,28 +128,28 @@ pipeline{
         }
 
         stage('Kubernetes Deployment') {
-        when { expression { params.action == 'create' } }
+            when { expression { params.action == 'create' } }
             steps {
                 script {
                     // Set the Kubernetes cluster context
-                    sh "kubectl config set-context my-cluster --namespace=default --server=http://192.168.138.105"
-                    
-                    // Authenticate to the cluster (replace 'kubeconfig-path' and 'cluster-credentials' with your actual credentials)
-                    sh "kubectl --context=my-cluster --kubeconfig=kubeconfig-path auth activate-service-account my-service-account --token=my-service-account-token"
-                    
-                    // Apply your deployment YAML
-                    sh "kubectl --context=my-cluster apply -f deployment.yaml"
-                    
-                    // Apply your service YAML
-                    sh "kubectl --context=my-cluster apply -f service.yaml"
-                    
-                    // Wait for the deployment to complete (adjust the timeout as needed)
-                    sh "kubectl --context=my-cluster rollout status deployment/your-deployment-name -n default --timeout=300s"
-                }
-    }
-}
+                    sh "kubectl config set-context minikube --namespace=default --server=https://192.168.59.100:8443 --certificate-authority=/home/idrbt1/.minikube/ca.crt"
 
-        
-          
+                    // Authenticate to the cluster using the 'my-service-account' user
+                    sh "kubectl --context=minikube auth activate-service-account my-service-account --token=YOUR-ACTUAL-TOKEN"
+
+                    // Apply your deployment YAML
+                    sh "kubectl --context=minikube apply -f deployment.yaml"
+
+                    // Apply your service YAML
+                    sh "kubectl --context=minikube apply -f service.yaml"
+
+                    // Wait for the deployment to complete (adjust the timeout as needed)
+                    sh "kubectl --context=minikube rollout status deployment/your-deployment-name -n default --timeout=300s"
+                }
+            }
+        }
+
+
+         
     }
 }
