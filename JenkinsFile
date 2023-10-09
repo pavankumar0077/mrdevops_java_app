@@ -110,7 +110,6 @@ pipeline{
                     dockerImageScan("${params.DockerRepo}","${params.ImageName}","${params.ImageTag}")
                 }
             }
-
         }
     }
 }
