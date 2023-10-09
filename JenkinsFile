@@ -102,5 +102,15 @@ pipeline{
             }
 
         }
+
+        stage('Docker Image Scan: TRIVY'){
+        when{expression {params.action == 'create'}}
+            steps{
+                script{
+                    dockerImageScan("${params.DockerRepo}","${params.ImageName}","${params.ImageTag}")
+                }
+            }
+
+        }
     }
 }
