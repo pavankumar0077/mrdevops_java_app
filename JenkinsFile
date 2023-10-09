@@ -88,6 +88,15 @@ pipeline{
 
         }
 
+        stage('Docker Image Scan: TRIVY'){
+        when{expression {params.action == 'create'}}
+            steps{
+                script{
+                    dockerImageScan("${params.DockerRepo}","${params.ImageName}","${params.ImageTag}")
+                }
+            }
+        }
+
         stage('Docker Image Push'){
         when{expression {params.action == 'create'}}
             environment {
@@ -101,15 +110,6 @@ pipeline{
                 }
             }
 
-        }
-
-        stage('Docker Image Scan: TRIVY'){
-        when{expression {params.action == 'create'}}
-            steps{
-                script{
-                    dockerImageScan("${params.DockerRepo}","${params.ImageName}","${params.ImageTag}")
-                }
-            }
-        }
+        }    
     }
 }
